@@ -1,10 +1,14 @@
 import { Height } from "@material-ui/icons";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 const Product = (product) =>{
   useEffect(()=>{
     console.log(product)
     console.log(product.product.name)
 },[])
+const linkToProDe =  ()=>{
+<Link to={`/chi-tiet-san-pham/${product.product.id}`}></Link>
+}
   return (
     <>
       <div className="col-md-4 product-men" style={{"height" : "100%", "width" : "50%"}}>
@@ -17,7 +21,7 @@ const Product = (product) =>{
               />
               <div className="men-cart-pro">
                 <div className="inner-men-cart-pro">
-                  <a href="single.html" className="link-product-add-cart">Quick View</a>
+                  <Link to={`/chi-tiet-san-pham/${product.product.id}`} className="link-product-add-cart">Quick View</Link> 
                 </div>
               </div>
               {product.product.sale != 0 ? <span className="product-new-top">{product.product.sale}%</span> : null}

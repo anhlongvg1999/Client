@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import makeRequest from '../../libs/request';
+import { useParams } from "react-router-dom";
 export default function ProductDetail() {
+    const { productId } = useParams();
     const [dataSearch, setDataSearch] = useState({ id: '' });
     const [products, setProducts] = useState([]);
     const [productManufacturer, setProductManufacturer] = useState([]);
+    //console.log(productId)
     useEffect(() => {
         console.log('starttttttttttttttt')
-        searchProduct({ id: 23 });
+        searchProduct({ id: productId });
     }, [])
     const searchProduct = (dataSearch = {}) => {
         console.log("111111111111")
@@ -22,342 +25,182 @@ export default function ProductDetail() {
                 console.log(err)
             })
     }
-
+    const renderStatusProduct = (productsize) => {
+        let check = productsize.find(element => element.number > 0);
+        if (check) {
+            return (<>
+                <p><span className="item_price">Tình trạng : Còn Hàng</span></p></>)
+        } else {
+            return (<>
+                <p><span className="item_price">Tình trạng : Hết Hàng</span></p></>)
+        }
+    }
+    const renderSizeProduct = (productsize) => {
+        let check = productsize.find(element => element.number > 0);
+        let dataSize = productsize.map(x => x.size.name);
+        let sizeString = "";
+        dataSize.forEach((element, index) => {
+            if (index == dataSize.length - 1) {
+                sizeString = sizeString + element;
+            } else {
+                sizeString = sizeString + element + ',';
+            }
+        });
+        if (check) {
+            return (<>
+                <p><span className="item_price">Size : {sizeString}</span></p></>)
+        } else {
+            return (<>
+            </>)
+        }
+    }
     return (
-    <>
-        <div className="ads-grid_shop">
-            <div className="shop_inner_inf">
-                <div className="col-md-4 single-right-left ">
-                    <div className="grid images_3_of_2">
-                        <div className="flexslider">
-                            <ul className="slides">
-                                <li data-thumb="images/d2.jpg">
-                                    <div className="thumb-image"> <img src={products.image} data-imagezoom="true" className="img-responsive" /> </div>
-                                </li>
-                            </ul>
-                            <div className="clearfix" />
+        <>
+            <div className="ads-grid_shop">
+                <div className="shop_inner_inf">
+                    <div className="col-md-4 single-right-left ">
+                        <div className="grid images_3_of_2">
+                            <div className="flexslider">
+                                {products.image ? (<div className="thumb-image"> <img src={products.image} data-imagezoom="true" className="img-responsive" /> </div>) : (<></>)}
+                                <div className="clearfix" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="col-md-8 single-right-left simpleCart_shelfItem">
-                    <h3>{products.name}</h3>
-                    {products.sale && products.sale != 0 ? (<>
-                        <p><span className="item_price">{(products.cost - (products.cost*products.sale)/100).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</span>
-                            <del>{products.cost.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</del>
-                        </p>
-                    </>) : (<p><span className="item_price">{products.cost.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</span>
-                    </p>)}
-                    <p><span className="item_price">Hãng : <a>{products.productmanufacturer.name}</a></span>
-                    </p>
-                    <p><span className="item_price">Mã sản phẩm : {products.productcode}</span>
-                    </p>
-                    
-                    <div className="occasion-cart">
-                        <div className="shoe single-item single_page_b">
-                            <form action="#" method="post">
-                                <input type="submit" name="submit" defaultValue="Add to cart" className="button add" />
-                                <a href="#" data-toggle="modal" data-target="#myModal1" />
-                            </form>
+                    <div className="col-md-8 single-right-left simpleCart_shelfItem">
+                        {products.name ? (<>
+                            <h3>{products.name}</h3>
+                            {products.sale && products.sale != 0 ? (<>
+                                <p><span className="item_price">{(products.cost - (products.cost * products.sale) / 100).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</span>
+                                    <del>{products.cost.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</del>
+                                </p>
+                            </>) : (<p><span className="item_price">{products.cost.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</span>
+                            </p>)}
+                            <p><span className="item_price">Hãng : <a>{products.productmanufacturer.name}</a></span>
+                            </p>
+                            <p><span className="item_price">Mã sản phẩm : {products.productcode}</span>
+                            </p>
+                            {renderStatusProduct(products.productsize)}
+                            {renderSizeProduct(products.productsize)}
+                        </>) : (<></>)}
+
+
+                        <div className="occasion-cart">
+                            <div className="shoe single-item single_page_b">
+                                <form action="#" method="post">
+                                    <input type="submit" name="submit" defaultValue="Add to cart" className="button add" />
+                                    <a href="#" data-toggle="modal" data-target="#myModal1" />
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                    <ul className="social-nav model-3d-0 footer-social social single_page">
-                        <li className="share">Share On : </li>
-                        <li>
-                            <a href="#" className="facebook">
-                                <div className="front"><i className="fa fa-facebook" aria-hidden="true" /></div>
-                                <div className="back"><i className="fa fa-facebook" aria-hidden="true" /></div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="twitter">
-                                <div className="front"><i className="fa fa-twitter" aria-hidden="true" /></div>
-                                <div className="back"><i className="fa fa-twitter" aria-hidden="true" /></div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="instagram">
-                                <div className="front"><i className="fa fa-instagram" aria-hidden="true" /></div>
-                                <div className="back"><i className="fa fa-instagram" aria-hidden="true" /></div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="pinterest">
-                                <div className="front"><i className="fa fa-linkedin" aria-hidden="true" /></div>
-                                <div className="back"><i className="fa fa-linkedin" aria-hidden="true" /></div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="clearfix"> </div>
-                {/*/tabs*/}
-                <div className="responsive_tabs">
-                    <div id="horizontalTab">
-                        <ul className="resp-tabs-list">
-                            <li>Description</li>
-                            <li>Reviews</li>
-                            <li>Information</li>
+                        <ul className="social-nav model-3d-0 footer-social social single_page">
+                            <li className="share">Share On : </li>
+                            <li>
+                                <a href="#" className="facebook">
+                                    <div className="front"><i className="fa fa-facebook" aria-hidden="true" /></div>
+                                    <div className="back"><i className="fa fa-facebook" aria-hidden="true" /></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="twitter">
+                                    <div className="front"><i className="fa fa-twitter" aria-hidden="true" /></div>
+                                    <div className="back"><i className="fa fa-twitter" aria-hidden="true" /></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="instagram">
+                                    <div className="front"><i className="fa fa-instagram" aria-hidden="true" /></div>
+                                    <div className="back"><i className="fa fa-instagram" aria-hidden="true" /></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="pinterest">
+                                    <div className="front"><i className="fa fa-linkedin" aria-hidden="true" /></div>
+                                    <div className="back"><i className="fa fa-linkedin" aria-hidden="true" /></div>
+                                </a>
+                            </li>
                         </ul>
-                        <div className="resp-tabs-container">
-                            {/*/tab_one*/}
-                            <div className="tab1">
-                                <div className="single_page">
-                                    <h6>Lorem ipsum dolor sit amet</h6>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elPellentesque vehicula augue eget nisl ullamcorper, molestie
-                                    blandit ipsum auctor. Mauris volutpat augue dolor.Consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                                    ut lab ore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco. labore et dolore
-                      magna aliqua.</p>
-                                    <p className="para">Lorem ipsum dolor sit amet, consectetur adipisicing elPellentesque vehicula augue eget nisl ullamcorper, molestie
-                                    blandit ipsum auctor. Mauris volutpat augue dolor.Consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                                    ut lab ore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco. labore et dolore
-                      magna aliqua.</p>
+                    </div>
+                    <div className="clearfix"> </div>
+                    <div className="responsive_tabs">
+                        <div id="horizontalTab">
+                            <ul className="resp-tabs-list">
+                                <li>Mô Tả sản phẩm</li>
+                                <li>Hướng dẫn mua hàng</li>
+                                <li>Hướng dẫn chọn size</li>
+                            </ul>
+                            <div className="resp-tabs-container">
+                                {/*/tab_one*/}
+                                <div className="tab1">
+                                    <div className="single_page">
+                                        {products.description ? (<>
+                                            {<div dangerouslySetInnerHTML={{ __html: products.description }} ></div>}
+                                        </>) : (<></>)}
+                                    </div>
                                 </div>
-                            </div>
-                            {/*//tab_one*/}
-                            <div className="tab2">
-                                <div className="single_page">
-                                    <div className="bootstrap-tab-text-grids">
-                                        <div className="bootstrap-tab-text-grid">
-                                            <div className="bootstrap-tab-text-grid-left">
-                                                <img src="images/t1.jpg" alt=" " className="img-responsive" />
+                                {/*//tab_one*/}
+                                <div className="tab2">
+                                    <div className="single_page">
+                                        <div className="bootstrap-tab-text-grids">
+                                            <div className="bootstrap-tab-text-grid">
+                                                <p style={{ "text-align": "justify" }} >
+                                                    <strong>Bước 1:</strong>
+                                                    Truy cập website và lựa chọn sản phẩm cần mua để mua hàng
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    <strong>Bước 2:</strong>
+                                                    Click và sản phẩm muốn mua, màn hình hiển thị ra pop up với các lựa chọn sau
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    Nếu bạn muốn tiếp tục mua hàng: Bấm vào phần tiếp tục mua hàng để lựa chọn thêm sản phẩm vào giỏ hàng
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    Nếu bạn muốn xem giỏ hàng để cập nhật sản phẩm: Bấm vào xem giỏ hàng
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    Nếu bạn muốn đặt hàng và thanh toán cho sản phẩm này vui lòng bấm vào: Đặt hàng và thanh toán
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    <strong>Bước 3:</strong>
+                                                    Lựa chọn thông tin tài khoản thanh toán
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    Nếu bạn đã có tài khoản vui lòng nhập thông tin tên đăng nhập là email và mật khẩu vào mục đã có tài khoản trên hệ thống
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    Nếu bạn chưa có tài khoản và muốn đăng ký tài khoản vui lòng điền các thông tin cá nhân để tiếp tục đăng ký tài khoản. Khi có tài khoản bạn sẽ dễ dàng theo dõi được đơn hàng của mình
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    Nếu bạn muốn mua hàng mà không cần tài khoản vui lòng nhấp chuột vào mục đặt hàng không cần tài khoản
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    <strong>Bước 4:</strong>
+                                                    Điền các thông tin của bạn để nhận đơn hàng, lựa chọn hình thức thanh toán và vận chuyển cho đơn hàng của mình
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    <strong>Bước 5:</strong>
+                                                    Xem lại thông tin đặt hàng, điền chú thích và gửi đơn hàng
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    Sau khi nhận được đơn hàng bạn gửi chúng tôi sẽ liên hệ bằng cách gọi điện lại để xác nhận lại đơn hàng và địa chỉ của bạn.
+                                                </p>
+                                                <p style={{ "text-align": "justify" }} >
+                                                    Trân trọng cảm ơn.
+                                                </p>
                                             </div>
-                                            <div className="bootstrap-tab-text-grid-right">
-                                                <ul>
-                                                    <li><a href="#">Admin</a></li>
-                                                    <li><a href="#"><i className="fa fa-reply-all" aria-hidden="true" /> Reply</a></li>
-                                                </ul>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elPellentesque vehicula augue eget.Ut enim ad minima veniam,
-                                                quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis
-                            autem vel eum iure reprehenderit.</p>
-                                            </div>
-                                            <div className="clearfix"> </div>
-                                        </div>
-                                        <div className="add-review">
-                                            <h4>add a review</h4>
-                                            <form action="#" method="post">
-                                                <input type="text" name="Name" required="Name" />
-                                                <input type="email" name="Email" required="Email" />
-                                                <textarea name="Message" required defaultValue={""} />
-                                                <input type="submit" defaultValue="SEND" />
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="tab3">
-                                <div className="single_page">
-                                    <h6>Shoe Rock Vision(SRV) Sneakers (Blue)</h6>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elPellentesque vehicula augue eget nisl ullamcorper, molestie
-                                    blandit ipsum auctor. Mauris volutpat augue dolor.Consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                                    ut lab ore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco. labore et dolore
-                      magna aliqua.</p>
-                                    <p className="para">Lorem ipsum dolor sit amet, consectetur adipisicing elPellentesque vehicula augue eget nisl ullamcorper, molestie
-                                    blandit ipsum auctor. Mauris volutpat augue dolor.Consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                                    ut lab ore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco. labore et dolore
-                      magna aliqua.</p>
+                                <div className="tab3">
+                                    <div className="single_page">
+                                        <img src="assets/images/bangsize.jpg" style={{"maxHeight":"100%","maxWidth":"100%","zoom":"1"}}></img>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/*//tabs*/}
-                {/* /new_arrivals */}
-                <div className="new_arrivals">
-                    <h3>Featured Products</h3>
-                    {/* /womens */}
-                    <div className="col-md-3 product-men women_two">
-                        <div className="product-shoe-info shoe">
-                            <div className="men-pro-item">
-                                <div className="men-thumb-item">
-                                    <img src="images/s4.jpg" alt="" />
-                                    <div className="men-cart-pro">
-                                        <div className="inner-men-cart-pro">
-                                            <a href="single.html" className="link-product-add-cart">Quick View</a>
-                                        </div>
-                                    </div>
-                                    <span className="product-new-top">New</span>
-                                </div>
-                                <div className="item-info-product">
-                                    <h4>
-                                        <a href="single.html">Shuberry Heels </a>
-                                    </h4>
-                                    <div className="info-product-price">
-                                        <div className="grid_meta">
-                                            <div className="product_price">
-                                                <div className="grid-price ">
-                                                    <span className="money ">$575.00</span>
-                                                </div>
-                                            </div>
-                                            <ul className="stars">
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star-half-o" aria-hidden="true" /></a></li>
-                                            </ul>
-                                        </div>
-                                        <div className="shoe single-item hvr-outline-out">
-                                            <form action="#" method="post">
-                                                <input type="hidden" name="cmd" defaultValue="_cart" />
-                                                <input type="hidden" name="add" defaultValue={1} />
-                                                <input type="hidden" name="shoe_item" defaultValue="Shuberry Heels" />
-                                                <input type="hidden" name="amount" defaultValue={575.00} />
-                                                <button type="submit" className="shoe-cart pshoe-cart"><i className="fa fa-cart-plus" aria-hidden="true" /></button>
-                                                <a href="#" data-toggle="modal" data-target="#myModal1" />
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div className="clearfix" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-3 product-men women_two">
-                        <div className="product-shoe-info shoe">
-                            <div className="men-pro-item">
-                                <div className="men-thumb-item">
-                                    <img src="images/s5.jpg" alt="" />
-                                    <div className="men-cart-pro">
-                                        <div className="inner-men-cart-pro">
-                                            <a href="single.html" className="link-product-add-cart">Quick View</a>
-                                        </div>
-                                    </div>
-                                    <span className="product-new-top">New</span>
-                                </div>
-                                <div className="item-info-product">
-                                    <h4>
-                                        <a href="single.html">Red Bellies </a>
-                                    </h4>
-                                    <div className="info-product-price">
-                                        <div className="grid_meta">
-                                            <div className="product_price">
-                                                <div className="grid-price ">
-                                                    <span className="money ">$325.00</span>
-                                                </div>
-                                            </div>
-                                            <ul className="stars">
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star-half-o" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star-o" aria-hidden="true" /></a></li>
-                                            </ul>
-                                        </div>
-                                        <div className="shoe single-item hvr-outline-out">
-                                            <form action="#" method="post">
-                                                <input type="hidden" name="cmd" defaultValue="_cart" />
-                                                <input type="hidden" name="add" defaultValue={1} />
-                                                <input type="hidden" name="shoe_item" defaultValue="Red Bellies" />
-                                                <input type="hidden" name="amount" defaultValue={325.00} />
-                                                <button type="submit" className="shoe-cart pshoe-cart"><i className="fa fa-cart-plus" aria-hidden="true" /></button>
-                                                <a href="#" data-toggle="modal" data-target="#myModal1" />
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div className="clearfix" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-3 product-men women_two">
-                        <div className="product-shoe-info shoe">
-                            <div className="men-pro-item">
-                                <div className="men-thumb-item">
-                                    <img src="images/s7.jpg" alt="" />
-                                    <div className="men-cart-pro">
-                                        <div className="inner-men-cart-pro">
-                                            <a href="single.html" className="link-product-add-cart">Quick View</a>
-                                        </div>
-                                    </div>
-                                    <span className="product-new-top">New</span>
-                                </div>
-                                <div className="item-info-product">
-                                    <h4>
-                                        <a href="single.html">Running Shoes</a>
-                                    </h4>
-                                    <div className="info-product-price">
-                                        <div className="grid_meta">
-                                            <div className="product_price">
-                                                <div className="grid-price ">
-                                                    <span className="money ">$875.00</span>
-                                                </div>
-                                            </div>
-                                            <ul className="stars">
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star-half-o" aria-hidden="true" /></a></li>
-                                            </ul>
-                                        </div>
-                                        <div className="shoe single-item hvr-outline-out">
-                                            <form action="#" method="post">
-                                                <input type="hidden" name="cmd" defaultValue="_cart" />
-                                                <input type="hidden" name="add" defaultValue={1} />
-                                                <input type="hidden" name="shoe_item" defaultValue="Running Shoes" />
-                                                <input type="hidden" name="amount" defaultValue={875.00} />
-                                                <button type="submit" className="shoe-cart pshoe-cart"><i className="fa fa-cart-plus" aria-hidden="true" /></button>
-                                                <a href="#" data-toggle="modal" data-target="#myModal1" />
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div className="clearfix" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-3 product-men women_two">
-                        <div className="product-shoe-info shoe">
-                            <div className="men-pro-item">
-                                <div className="men-thumb-item">
-                                    <img src="images/s8.jpg" alt="" />
-                                    <div className="men-cart-pro">
-                                        <div className="inner-men-cart-pro">
-                                            <a href="single.html" className="link-product-add-cart">Quick View</a>
-                                        </div>
-                                    </div>
-                                    <span className="product-new-top">New</span>
-                                </div>
-                                <div className="item-info-product">
-                                    <h4>
-                                        <a href="single.html">Sukun Casuals</a>
-                                    </h4>
-                                    <div className="info-product-price">
-                                        <div className="grid_meta">
-                                            <div className="product_price">
-                                                <div className="grid-price ">
-                                                    <span className="money ">$505.00</span>
-                                                </div>
-                                            </div>
-                                            <ul className="stars">
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star" aria-hidden="true" /></a></li>
-                                                <li><a href="#"><i className="fa fa-star-half-o" aria-hidden="true" /></a></li>
-                                            </ul>
-                                        </div>
-                                        <div className="shoe single-item hvr-outline-out">
-                                            <form action="#" method="post">
-                                                <input type="hidden" name="cmd" defaultValue="_cart" />
-                                                <input type="hidden" name="add" defaultValue={1} />
-                                                <input type="hidden" name="shoe_item" defaultValue="Sukun Casuals" />
-                                                <input type="hidden" name="amount" defaultValue={505.00} />
-                                                <button type="submit" className="shoe-cart pshoe-cart"><i className="fa fa-cart-plus" aria-hidden="true" /></button>
-                                                <a href="#" data-toggle="modal" data-target="#myModal1" />
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div className="clearfix" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* //womens */}
-                    <div className="clearfix" />
-                </div>
-                {/*//new_arrivals*/}
             </div>
-        </div>
-    </>
+
+        </>
     )
 }
