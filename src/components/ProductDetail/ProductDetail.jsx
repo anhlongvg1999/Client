@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import makeRequest from '../../libs/request';
 import { useParams } from "react-router-dom";
-export default function ProductDetail() {
+
+export default function ProductDetail(props) {
     const { productId } = useParams();
     const [dataSearch, setDataSearch] = useState({ id: '' });
     const [products, setProducts] = useState([]);
@@ -192,7 +193,7 @@ export default function ProductDetail() {
                                 </div>
                                 <div className="tab3">
                                     <div className="single_page">
-                                        <img src="assets/images/bangsize.jpg" style={{"maxHeight":"100%","maxWidth":"100%","zoom":"1"}}></img>
+                                        <img src="/assets/images/bangsize.jpg" style={{"maxHeight":"100%","maxWidth":"100%","zoom":"1"}}></img>
                                     </div>
                                 </div>
                             </div>

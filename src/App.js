@@ -4,21 +4,26 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 
 const App = () => {
+  const [cart, setCart] = useState({});
+  const handleAddToCart = async (product, quantity) => {
+    setCart()
+  };
   return (
     <>
     {/* <Navbar/>
-    <ProductDetail/>
+    <ProductDetail />
     <SomeMoreShoes />
         <Footer /> */}
       <Router>
-        <Navbar />
+        <Navbar totalItems={cart.total_items} />
          <Switch>
+         <Route exact path="/chi-tiet-san-pham/:productId" component={ProductDetail}>
+          </Route>
           <Route exact path="/" component={HomePage}>
           </Route>
-          <Route exact path="/tat-ca-san-pham" component={Products}>
+          <Route exact path="/tat-ca-san-pham"  component={Products}>
           </Route>
-          <Route exact path="/chi-tiet-san-pham/:productId" component={ProductDetail}>
-          </Route>
+          
         </Switch> 
         <SomeMoreShoes />
         <Footer />

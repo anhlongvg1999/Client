@@ -98,7 +98,7 @@ export default function Products() {
                     {/* //product left */}
                     {/* product right */}
                     <div className="left-ads-display col-md-9">
-                        <div class="wrapper_top_shop" style={{ "border-top-width": "0px", "border-left-width": "0px", "border-bottom-width": "0px", "border-right-width": "0px" }}>
+                        <div className="wrapper_top_shop" style={{ "border-top-width": "0px", "border-left-width": "0px", "border-bottom-width": "0px", "border-right-width": "0px" }}>
                             <div>
                                 <div className="col-md-6 shop_left">
                                     <img src="assets/images/banner3.jpg" alt="" />

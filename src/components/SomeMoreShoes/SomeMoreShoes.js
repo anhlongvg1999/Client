@@ -18,64 +18,64 @@ export default function SomeMoreShoes(){
                 <div className="item">
                   <div className="row">
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g1.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g1.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g2.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g2.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g3.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g3.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g4.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g4.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                   </div>
                 </div>
                 <div className="item active">
                   <div className="row">
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g5.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g5.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g6.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g6.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g2.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g2.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g1.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="row">
-                    <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g1.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
-                    </div>
-                    <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g2.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
-                    </div>
-                    <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g3.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
-                    </div>
-                    <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g4.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g1.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                   </div>
                 </div>
                 <div className="item">
                   <div className="row">
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g1.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g1.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g2.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g2.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g3.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g3.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                     <div className="col-md-3 col-sm-3 col-xs-3 slidering">
-                      <div className="thumbnail"><img src="assets/images/g4.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                      <div className="thumbnail"><img src="/assets/images/g4.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="item">
+                  <div className="row">
+                    <div className="col-md-3 col-sm-3 col-xs-3 slidering">
+                      <div className="thumbnail"><img src="/assets/images/g1.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                    </div>
+                    <div className="col-md-3 col-sm-3 col-xs-3 slidering">
+                      <div className="thumbnail"><img src="/assets/images/g2.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                    </div>
+                    <div className="col-md-3 col-sm-3 col-xs-3 slidering">
+                      <div className="thumbnail"><img src="/assets/images/g3.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
+                    </div>
+                    <div className="col-md-3 col-sm-3 col-xs-3 slidering">
+                      <div className="thumbnail"><img src="/assets/images/g4.jpg" alt="Image" style={{maxWidth: '100%'}} /></div>
                     </div>
                   </div>
                 </div>
