@@ -22,8 +22,7 @@ const App = () => {
           <Route exact path="/" component={HomePage}>
           </Route>
           <Route exact path="/tat-ca-san-pham"  component={Products}>
-          </Route>
-          
+          </Route>       
         </Switch> 
         <SomeMoreShoes />
         <Footer />
