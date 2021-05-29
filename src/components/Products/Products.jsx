@@ -4,15 +4,16 @@ import makeRequest from '../../libs/request';
 import 'antd/dist/antd.css';
 import { Modal, Pagination } from "antd";
 import { Paper } from "@material-ui/core";
-export default function Products() {
+export default function Products({ isSale ,productmanufacturerId}) {
+    const [datakSale, setDataSale] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
     const [dataSearch, setDataSearch] = useState({ name: '' });
     const [total, setTotal] = useState(0);
     useEffect(() => {
-        searchProduct({ page: 1, limit: rowsPerPage });
-    }, [])
+        searchProduct({ page: 1, limit: rowsPerPage, sale: isSale ? isSale : 0 ,productmanufacturerId: productmanufacturerId? productmanufacturerId : ""});
+    }, [isSale,productmanufacturerId])
     const searchProduct = (dataSearch = {}) => {
         console.log("111111111111")
         makeRequest('get', `product/getProduct`, dataSearch)
@@ -45,7 +46,7 @@ export default function Products() {
     }
     return (
         <>
-            
+
             <div className="ads-grid_shop">
                 <div className="shop_inner_inf">
                     <div className="side-bar col-md-3">

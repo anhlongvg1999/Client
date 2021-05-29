@@ -7,16 +7,21 @@ import Form from "react-bootstrap/Form";
 import { showSuccessMessageIcon, showErrorMessage } from '../../actions/notification';
 import makeRequest from '../../libs/request';
 import "./login.css";
+import {
+    Nav,
+    NavLink,
+    NavMenu,
+} from './NavbarElements';
 export default function Navbar({ totalItems }) {
     const [login, setLogin] = useState({ visible: false });
-    const [colorHome,setColorHome]=useState("white");
+    const [colorHome, setColorHome] = useState("white");
     const [islogin, setIsLogin] = useState();
     const [register, setRegister] = useState({ visible: false });
     const [user, setUser] = useState({});
     const formLogin = React.createRef();
     const formRegister = React.createRef();
     useEffect(() => {
-        
+
         const checklogin = localStorage.getItem('isLogin');
         const checkUser = localStorage.getItem('user');
         if (checklogin && checklogin == "true") {
@@ -69,8 +74,8 @@ export default function Navbar({ totalItems }) {
         return login.email != '' && login.password != '';
     }
     function validateRegisterForm() {
-        return register.email != '' && register.password != '' && register.firstname != '' && register.lastname != '' && 
-        register.confirmpassword != '' && register.address != '' && register.city != '' && register.mobile != '' ;
+        return register.email != '' && register.password != '' && register.firstname != '' && register.lastname != '' &&
+            register.confirmpassword != '' && register.address != '' && register.city != '' && register.mobile != '';
     }
     const SubmitLogin = (e) => {
         e.preventDefault();
@@ -102,7 +107,7 @@ export default function Navbar({ totalItems }) {
                     localStorage.setItem('isLogin', true);
                     localStorage.setItem('user', JSON.stringify(res));
                     setUser(res);
-                    
+
                 } else {
                     return showErrorMessage(data.message);
                 }
@@ -117,8 +122,7 @@ export default function Navbar({ totalItems }) {
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(register.email)) {
             return showErrorMessage('Vui lòng nhập đúng định dạng email');
         }
-        if(register.password !== register.confirmpassword)
-        {
+        if (register.password !== register.confirmpassword) {
             return showErrorMessage('password không khớp');
         }
         makeRequest('post', `account/createUser`, register)
@@ -137,7 +141,7 @@ export default function Navbar({ totalItems }) {
                 showErrorMessage('Đã xảy ra lỗi!');
             })
     }
-    const logOut = ()=>{
+    const logOut = () => {
         setIsLogin(false);
         localStorage.removeItem('isLogin');
         localStorage.removeItem('user');
@@ -148,7 +152,7 @@ export default function Navbar({ totalItems }) {
                 <div className="wrapper_top_w3layouts">
                     <div className="header_agileits">
                         <div className="logo inner_page_log">
-                            <h1><a className="navbar-brand" href="index.html"><span>Downy</span> <i>Shoes</i></a></h1>
+                            <h1><a className="navbar-brand" href="/"><span>Downy</span> <i>Shoes</i></a></h1>
                         </div>
 
                         {/* cart details */}
@@ -159,9 +163,9 @@ export default function Navbar({ totalItems }) {
                                         <Button variant="contained" onClick={(e) => showModalLogin()}>Đăng nhập</Button>
                                         <Button variant="contained" onClick={(e) => showModalRegister()}>Đămg ký</Button>
                                     </>) : (<>
-                                        
-                                        <span><Link>{user.firstname} {user.lastname}</Link><i>|</i></span> 
-                                        <span><Link onClick = {logOut}>Đăng xuất</Link></span> 
+
+                                        <span><Link>{user.firstname} {user.lastname}</Link><i>|</i></span>
+                                        <span><Link onClick={logOut}>Đăng xuất</Link></span>
                                     </>)}
                                     <IconButton className="top_shoe_cart" aria-label="Show cart items" color="inherit">
                                         <Badge badgeContent={totalItems} color="secondary">
@@ -174,14 +178,20 @@ export default function Navbar({ totalItems }) {
                     </div>
                 </div>
                 <div className="clearfix" />
-                <div className="services-breadcrumb_w3ls_agileinfo">
-                    <div className="inner_breadcrumb_agileits_w3">
-                        <ul className="short">
-                            <li><a href="/" style={{color:'white'}}>Home</a><i>|</i></li>
-                            <li><a href="/tat-ca-san-pham" onClick="">Tất cả sản phẩm</a><i>|</i></li>
-                        </ul>
-                    </div>
-                </div>
+                <NavMenu>
+                    <NavLink to='/tat-ca-san-pham' activeStyle>
+                        TẤT CẢ SẢN PHẨM
+                    </NavLink>
+                    <NavLink to='/giam-gia' activeStyle>
+                        GIẢM GIÁ
+                    </NavLink>
+                    <NavLink to='/adidas' activeStyle>
+                        ADIDAS
+                    </NavLink>
+                    <NavLink to='/nike' activeStyle>
+                        NIKE
+                    </NavLink>
+                </NavMenu>
             </div>
             <Modal
                 title='Đăng nhập'
