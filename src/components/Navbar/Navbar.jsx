@@ -20,8 +20,8 @@ export default function Navbar({ totalItems }) {
     const [user, setUser] = useState({});
     const formLogin = React.createRef();
     const formRegister = React.createRef();
+    console.log('55555555555555555',totalItems)
     useEffect(() => {
-
         const checklogin = localStorage.getItem('isLogin');
         const checkUser = localStorage.getItem('user');
         if (checklogin && checklogin == "true") {
@@ -114,7 +114,6 @@ export default function Navbar({ totalItems }) {
             })
             .catch(err => {
                 localStorage.setItem('isLogin', false)
-                console.log('Error', err)
             })
     }
     const handleSubmitRegister = (e) => {
@@ -167,7 +166,7 @@ export default function Navbar({ totalItems }) {
                                         <span><Link>{user.firstname} {user.lastname}</Link><i>|</i></span>
                                         <span><Link onClick={logOut}>Đăng xuất</Link></span>
                                     </>)}
-                                    <IconButton className="top_shoe_cart" aria-label="Show cart items" color="inherit">
+                                    <IconButton component={Link} to="/cart" className="top_shoe_cart" aria-label="Show cart items" color="inherit">
                                         <Badge badgeContent={totalItems} color="secondary">
                                             <ShoppingCart />
                                         </Badge>
@@ -224,9 +223,6 @@ export default function Navbar({ totalItems }) {
                         </Form.Group>
                         <Button variant="primary" type="submit" visible={false} style={{ width: 0, height: 0, paddingTop: 0, paddingBottom: 0, paddingRight: 0, paddingLeft: 0 }} ref={formLogin}>
                         </Button>
-                        {/* <Button block size="lg" type="submit" disabled={!validateForm()}>
-                            Login
-            </Button> */}
                     </Form>
                 </div>
             </Modal>

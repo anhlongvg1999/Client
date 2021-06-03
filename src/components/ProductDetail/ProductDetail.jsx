@@ -1,23 +1,38 @@
 import React, { useState, useEffect } from "react";
 import makeRequest from '../../libs/request';
 import { useParams } from "react-router-dom";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import { Button, IconButton } from '@material-ui/core';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import Form from "react-bootstrap/Form";
+import { showErrorMessage } from '../../actions/notification';
 
-export default function ProductDetail(props) {
+export default function ProductDetail({ onAddToCart }) {
     const { productId } = useParams();
     const [dataSearch, setDataSearch] = useState({ id: '' });
     const [products, setProducts] = useState([]);
     const [productManufacturer, setProductManufacturer] = useState([]);
-    //console.log(productId)
+    const [selectedSize, setSelectedSize] = React.useState();
+    const [quantity, setQuantity] = React.useState(1);
     useEffect(() => {
-        console.log('starttttttttttttttt')
         searchProduct({ id: productId });
     }, [])
+    const handleAddToCart = () => {
+        if (selectedSize != null) {
+            return onAddToCart(products, quantity, selectedSize)
+        }
+        else {
+            return showErrorMessage('Vui lòng chọng Size !');
+        }
+    };
     const searchProduct = (dataSearch = {}) => {
-        console.log("111111111111")
         makeRequest('get', `product/getProductbyId`, dataSearch)
             .then(({ data }) => {
                 if (data.signal) {
-                    console.log('xxxxxxxxxxxxx', data.data)
                     const res = data.data;
                     setProducts(res);
                 }
@@ -36,20 +51,49 @@ export default function ProductDetail(props) {
                 <p><span className="item_price">Tình trạng : Hết Hàng</span></p></>)
         }
     }
+    const downQuantity = () => {
+        if (quantity != 1) {
+            setQuantity(quantity - 1);
+        }
+    }
+    const upQuantity = () => {
+        setQuantity(quantity + 1);
+    }
+    const handleChangeSize = (event) => {
+        console.log('111111111111', event.target.value)
+        setSelectedSize(event.target.value);
+    };
     const renderSizeProduct = (productsize) => {
         let check = productsize.find(element => element.number > 0);
         let dataSize = productsize.map(x => x.size.name);
-        let sizeString = "";
-        dataSize.forEach((element, index) => {
-            if (index == dataSize.length - 1) {
-                sizeString = sizeString + element;
-            } else {
-                sizeString = sizeString + element + ',';
-            }
-        });
         if (check) {
             return (<>
-                <p><span className="item_price">Size : {sizeString}</span></p></>)
+
+                <FormControl>
+                    <p><span className="item_price">Size : </span></p>
+                    <RadioGroup row aria-label="position" name="position" defaultValue="">
+                        {productsize.map((element) => (
+                            <FormControlLabel
+                                checked={selectedSize == element.size_id}
+                                value={element.size_id}
+                                control={<Radio color="primary" />}
+                                label={element.size.name}
+                                onChange={(e) => handleChangeSize(e)}
+                            />
+                        ))}
+                    </RadioGroup>
+                    <Form.Group>
+                        <Form.Label>Số Lượng :  </Form.Label>
+                        <IconButton color="primary" aria-label="upload picture" onClick={downQuantity}>
+                            <Form.Label> - </Form.Label>
+                        </IconButton>
+                        <Form.Label >{quantity}</Form.Label>
+                        <IconButton color="primary" aria-label="upload picture" onClick={upQuantity}>
+                            <Form.Label> + </Form.Label>
+                        </IconButton>
+                    </Form.Group>
+                </FormControl>
+            </>)
         } else {
             return (<>
             </>)
@@ -87,10 +131,11 @@ export default function ProductDetail(props) {
 
                         <div className="occasion-cart">
                             <div className="shoe single-item single_page_b">
-                                <form action="#" method="post">
+                                {/* <form action="#" method="post">
                                     <input type="submit" name="submit" defaultValue="Add to cart" className="button add" />
                                     <a href="#" data-toggle="modal" data-target="#myModal1" />
-                                </form>
+                                </form> */}
+                                <Button variant="contained" color="primary" href="#contained-buttons" onClick={handleAddToCart}>THÊM VÀO GIỎ HÀNG</Button>
                             </div>
                         </div>
                         <ul className="social-nav model-3d-0 footer-social social single_page">
@@ -193,7 +238,7 @@ export default function ProductDetail(props) {
                                 </div>
                                 <div className="tab3">
                                     <div className="single_page">
-                                        <img src="/assets/images/bangsize.jpg" style={{"maxHeight":"100%","maxWidth":"100%","zoom":"1"}}></img>
+                                        <img src="/assets/images/bangsize.jpg" style={{ "maxHeight": "100%", "maxWidth": "100%", "zoom": "1" }}></img>
                                     </div>
                                 </div>
                             </div>

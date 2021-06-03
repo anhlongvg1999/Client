@@ -4,7 +4,7 @@ import makeRequest from '../../libs/request';
 import 'antd/dist/antd.css';
 import { Modal, Pagination } from "antd";
 import { Paper } from "@material-ui/core";
-export default function Products({ isSale ,productmanufacturerId}) {
+export default function Products({ isSale ,productmanufacturerId,onAddToCart}) {
     const [datakSale, setDataSale] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [products, setProducts] = useState([]);
@@ -15,11 +15,9 @@ export default function Products({ isSale ,productmanufacturerId}) {
         searchProduct({ page: 1, limit: rowsPerPage, sale: isSale ? isSale : 0 ,productmanufacturerId: productmanufacturerId? productmanufacturerId : ""});
     }, [isSale,productmanufacturerId])
     const searchProduct = (dataSearch = {}) => {
-        console.log("111111111111")
         makeRequest('get', `product/getProduct`, dataSearch)
             .then(({ data }) => {
                 if (data.signal) {
-                    console.log('xxxxxxxxxxxxx', data.data)
                     const res = data.data.listProduct;
                     setProducts(res);
                     setTotal(data.data.total)
@@ -34,7 +32,6 @@ export default function Products({ isSale ,productmanufacturerId}) {
         searchProduct({ page: newPage, limit: rowsPerPage });
     };
     const onChangeValueSearch = (key, value) => {
-        console.log(value)
         setDataSearch({
             ...dataSearch,
             [key]: value
@@ -113,7 +110,7 @@ export default function Products({ isSale ,productmanufacturerId}) {
                             </div>
                             {
                                 products.length ? products.map((product) => (
-                                    <Product product={product} />
+                                    <Product product={product} onAddToCart={onAddToCart}/>
                                 )) : (null)
                             }
 
